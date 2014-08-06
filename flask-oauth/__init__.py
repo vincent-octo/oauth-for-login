@@ -1,7 +1,7 @@
 from flask import Flask, request, redirect
 from .config import CLIENT_ID, CLIENT_SECRET
 import urllib
-import simplejson as json
+import json
 import logging
 
 # CONF
