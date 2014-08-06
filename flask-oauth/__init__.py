@@ -1,11 +1,10 @@
 from flask import Flask, request, redirect
+from .config import CLIENT_ID, CLIENT_SECRET
 import urllib
 import simplejson as json
 import logging
 
 # CONF
-CLIENT_ID = 'YOUR_CLIENT_ID_HERE'
-CLIENT_SECRET = 'YOUR_CLIENT_SECRET_HERE'
 THIRD_PARTY_AUTH_ENDPOINT = 'https://github.com/login/oauth/authorize'
 THIRD_PARTY_ACCESS_TOKEN_ENDPOINT = 'https://github.com/login/oauth/access_token'
 THIRD_PARTY_API_ENDPOINT = 'https://api.github.com/user'
