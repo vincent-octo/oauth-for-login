@@ -31,12 +31,12 @@ Il y a 3 acteurs dans l'authentification :
 Le processus d'authentification suit globalement le schéma suivant, pour les plateformes d'authentification :
 
 1. l'utilisateur tente d'accéder à une page dont l'accès est restreint.
-2. le serveur capte cette requête et redirige l'utilisateur vers la plateforme d'authentification, le serveur doit fournir son *client id* et (optionnellement) sa *redirect URI* afin que la plateforme l'identifie.
+2. le serveur capte cette requête et redirige l'utilisateur vers la plateforme d'authentification, le serveur doit fournir son `client_id` et (optionnellement) sa `redirect_uri` afin que la plateforme l'identifie.
 3. l'utilisateur s'identifie sur la plateforme d'authentification.
-4. la plateforme envoie un *code* à usage unique au serveur.
-5. le serveur renvoie le *code*, ainsi que son *client id* et *client secret* (pour prouver son identité) à la plateforme.
-6. la plateforme renvoie un *access token* au serveur.
-7. le serveur renvoie cet *access token* à la plateforme pour obtenir des informations sur l'utilisateur.
+4. la plateforme envoie un `code` à usage unique au serveur (un paramètre `state` peut aussi être renvoyé).
+5. le serveur renvoie le `code`, ainsi que son `client_id` et `client_secret` (pour prouver son identité) à la plateforme.
+6. la plateforme renvoie un `access_token` au serveur.
+7. le serveur renvoie cet `access_token` à la plateforme pour obtenir des informations sur l'utilisateur.
 8. la plateforme renvoie les informations sur l'utilisateur au serveur.
 9. le serveur indique à l'utilisateur qu'il est bien identifié.
 
@@ -56,11 +56,16 @@ Après, vous devez renseigner les variables `CLIENT_ID` et `CLIENT_SECRET` dans 
 - `python flask-oauth/__init__.py`.
 - `uwsgi --http :9090 -w flask-oauth --callable app --python-path flask-oauth` (si vous avez *uwsgi* installé, sinon `pip install uwsgi`).
 
-**Note** : Ceci est un script de démonstration : l'identification n'est pas contrainte à une session, mais est *globale au serveur*.
+**Note** : Ceci est un script de démonstration : l'identification n'est pas faite au niveau d'une session, mais est *globale au serveur*...
 
 
 ## Les différences entre les plateformes
 
+
+|                    | Github                                                           | Google (OAuth2 early version)                           | Facebook | Twitter |
+| ------------------ | ---------------------------------------------------------------- | ------------------------------------------------------------- | --- | ---- |
+| paramètres étape 2 | `client_id`, `redirect_uri` (opt), `scope` (opt), `state` (opt). | `client_id`, `redirect_uri`, `scope`, `response_type`, `state` (opt) | `client_id`, `redirect_uri`, `state` (opt), `response_type` (opt), `scope` (opt) | |
+| paramètres étape 5 | `code`, `client_id`, `client_secret`, `redirect_uri` (opt)       | `code`, `client_id`, `client_secret`, `redirect_uri`, `grant_type` | `code`, `client_id`, `client_secret`, `redirect_uri` | |
 
 
 [gh-doc-oauth]: https://developer.github.com/v3/oauth/
