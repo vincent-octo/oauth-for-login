@@ -39,17 +39,17 @@ Le processus d'authentification suit globalement le schéma suivant :
 A titre d'exemple, j'ai fais un script qui utilise l'authentification sur Github. Vous le trouverez dans le répertoire *flask-oauth*.
 
 Voici les commandes pour créer l'environnement virtuel python et installer les dépendances :
-- `virtualenv . -p python3` (ou, si vous ne voulez pas utiliser python 3 : `virtualenv .`).
-- `source bin/activate`.
+- `virtualenv . -p python3` (ce prototype n'est compatible qu'avec la version 3 de python).
+- `source bin/activate` pour activer l'environnement virtuel.
 - `pip install Flask`.
 
 Avant de lancer, vous devez [enregistrer une application sur Github] [gh-application-reg]. Dans le champs *Authorization callback URL*, mettre `http://localhost:9090/`.
-Après, vous devez renseigner les variables `CLIENT_ID` et `CLIENT_SECRET` dans le fichier *flask-oauth/config.py* (voir leurs valeurs sur Github). Ensuite, deux façons de lancer le script :
+Après, vous devez renseigner les variables `CLIENT_ID` et `CLIENT_SECRET` dans le fichier *flask-oauth/config.py* (voir leurs valeurs sur Github). Ensuite, deux façons de lancer le script (bien vérifier de les lancer dans l'environnement virtuel) :
 
-- `python flask-oauth/__init__.py`.
-- `uwsgi --http :9090 -w flask-oauth --callable app --python-path flask-oauth` (si vous avez *uwsgi* installé, sinon `pip install uwsgi`).
+- `python flask-oauth/__init__.py`
+- `uwsgi --http :9090 -w flask-oauth --callable app --python-path flask-oauth` (si vous avez *uwsgi* installé dans l'environnement virtuel, sinon `pip install uwsgi` pour l'installer).
 
-**Note** : Ceci est un script de démonstration : l'identification n'est pas faite au niveau d'une session, mais est *globale au serveur*... Ne pas utiliser en production.
+**Note** : Ceci est un script de démonstration : l'identification n'est pas faite au niveau d'une session, mais est *globale au serveur*... *Ne pas utiliser en production*.
 
 
 ## Les différences entre les plateformes
@@ -57,7 +57,7 @@ Après, vous devez renseigner les variables `CLIENT_ID` et `CLIENT_SECRET` dans 
 
 |                    | Github                                                           | Google (OAuth2 early version)                           | Facebook |
 | ------------------ | ---------------------------------------------------------------- | ------------------------------------------------------------- | --- |
-| paramètres étape 2 | `client_id`, `redirect_uri` (opt), `scope` (opt), `state` (opt). | `client_id`, `redirect_uri`, `scope`, `response_type`, `state` (opt) | `client_id`, `redirect_uri`, `state` (opt), `response_type` (opt), `scope` (opt) |
+| paramètres étape 2 | `client_id`, `redirect_uri` (opt), `scope` (opt), `state` (opt). | `client_id`, `redirect_uri`, `scope`, `response_type`, `state` (opt) | `client_id`, `redirect_uri`, `scope` (opt), `state` (opt), `response_type` (opt) |
 | paramètres étape 5 | `code`, `client_id`, `client_secret`, `redirect_uri` (opt)       | `code`, `client_id`, `client_secret`, `redirect_uri`, `grant_type` | `code`, `client_id`, `client_secret`, `redirect_uri` |
 
 
